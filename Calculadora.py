@@ -1,4 +1,5 @@
 import time
+import operator
 
 #VARIABLES globales / Global VARIABLES
 power = True
@@ -22,7 +23,40 @@ def libre():
         try:
             operacion = input("""Introduzca la operación a realizar o escriba 'salir' para salir.\n>> """)
             if operacion.upper() == "SALIR":    break
-            else:   print(eval(operacion))
+            else:   
+                print(eval(operacion))
+                operacion = operacion + "$"
+                operadores = ( "+", "-", "*", "/", "$")
+                problema = []
+                numero = ""
+                for val in operacion:
+                    if val in operadores:
+                        problema.append(int(numero))
+                        problema.append(val)
+                        numero = ""
+                    elif val not in operadores:
+                        numero = numero + val
+                operacion = 0
+                operador = ""
+                primeraPosición = True
+                for val in problema:
+                    if val == '*':  operador = val
+                    elif val == '/':    operador = val
+                    elif val == '+':    operador = val
+                    elif val == '-':    operador = val
+                    elif val == '$':    break
+                    else:
+                        if primeraPosición:
+                            operacion = val
+                            primeraPosición = False 
+                        else:
+                            if operador == '*': operacion = operacion * val
+                            elif operador == '/':   operacion = operacion / val
+                            elif operador == '+':   operacion = operacion + val
+                            elif operador == '-':   operacion = operacion - val
+                print(f'El resultado es: {operacion}')
+                del operacion, operadores, problema, primeraPosición, operador, numero
+
         except:
             continuar = errornum()
             if continuar == False:
