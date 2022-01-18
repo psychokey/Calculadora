@@ -21,25 +21,35 @@ def inputs(operacion): #El usuario entrará aquí cada vez que quiera realizar u
 def libre():
     while power:
         try:
+            #Le pide al usuario que introdzca una operación / Asks the user for a math problem to solve
             operacion = input("""Introduzca la operación a realizar o escriba 'salir' para salir.\n>> """)
-            if operacion.upper() == "SALIR":    break
+            if operacion.upper() == "SALIR":    break #Si el usuario escribe 'salir' volverá al menú principal / if the user types 'salir', he will go back to the main menu
             else:   
-                print(eval(operacion))
-                operacion = operacion + "$"
-                operadores = ( "+", "-", "*", "/", "$")
-                problema = []
+                #print(eval(operacion)) 
+
+                operacion = operacion + "$" 
+                #Le sumará un '$' es para indicar cuando termina la lista. Ejemplo: problema = [1, '+', 1, '$']
+                #It will add a '$' to indicate when the list is over. Example: problem = [1, '+', 1, '$']
+
+                operadores = ( "+", "-", "*", "/", "$") #Operadores / Operators
+                problema = [] #Aquí se seccionará la operación entre números y operadores / Here the operation will be stored divided in numbers and operators
+                
                 numero = ""
-                for val in operacion:
+                for val in operacion: #Recorre la operación y verifica si val es número u operador / Iterates the math operation and verifies if the val is a number or a operator
                     if val in operadores:
                         problema.append(int(numero))
                         problema.append(val)
                         numero = ""
                     elif val not in operadores:
                         numero = numero + val
-                operacion = 0
-                operador = ""
-                primeraPosición = True
-                for val in problema:
+
+                operacion = 0 #Aquí se irá almacenando el resultado conforme se hagan las operaciones / Here will be stored the final result while the operations are solved
+                operador = "" #Aquí se almacenará cada operador en medio de dos valores / Here will be stored every operator in the middle of 2 vals
+                primeraPosición = True #El primer número no se puede operar por uno antes de él, ya que él es el primero / The first number can't be operated with other value before him, because he is the first one 
+                
+                #Este 'for' separa números de operadores, y cuando encuentra un número después de un operador, realizará la operación
+                #This 'for' separates numbers from operators, when it finds a number after having finded an operator, it will solve a simple operation
+                for val in problema: 
                     if val == '*':  operador = val
                     elif val == '/':    operador = val
                     elif val == '+':    operador = val
@@ -54,8 +64,9 @@ def libre():
                             elif operador == '/':   operacion = operacion / val
                             elif operador == '+':   operacion = operacion + val
                             elif operador == '-':   operacion = operacion - val
-                print(f'El resultado es: {operacion}')
-                del operacion, operadores, problema, primeraPosición, operador, numero
+                            
+                print(f'El resultado es: {operacion}') #Aquí se imprime el resultado final / Here will be printed the final result
+                del operacion, operadores, problema, primeraPosición, operador, numero #Se eliminan variables para liberar espacio / Deletes variables to free up memory
 
         except:
             continuar = errornum()
